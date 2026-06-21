@@ -80,7 +80,6 @@ A sortable data table listing the same top 10 clusters, ranked by violation coun
 | File | Description |
 |---|---|
 | `jan to may police violation_anonymized791b166.csv` | Raw police violation records, Jan–May. Anonymised. Columns include datetime, location (lat/lon), junction name, vehicle type, violation type. |
-| `hotspot_Data.csv` | Same records after clustering. Adds `hotspot_cluster` (integer cluster ID, or `-1` for noise) and `hour` (extracted from datetime). 33.9 MB — stored via Git LFS. |
 
 ---
 
@@ -146,12 +145,6 @@ The map is centred on Bangalore (12.97°N, 77.59°E) and updates dynamically bas
 - The `-1` cluster label (DBSCAN noise points) is filtered out before display; only confirmed spatial clusters appear on the map
 - Cluster centroids are computed as the **mean latitude/longitude** of all violations in the cluster; the primary junction, vehicle type, and offence are determined by **mode** (most frequent value)
 - The dashboard currently supports a single city (Bangalore). To adapt it for another city, update the `folium.Map` centre coordinates in `app.py`
-
----
-
-## 🤝 Contributing
-
-Pull requests are welcome. For significant changes, please open an issue first to discuss what you'd like to change.
 
 ---
 
