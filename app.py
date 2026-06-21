@@ -8,7 +8,7 @@ from folium.plugins import MarkerCluster
 
 # ── Page Config ──────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Gridlock · Bangalore Traffic Intelligence",
+    page_title="Bangalore Traffic Intelligence",
     page_icon="🚦",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -18,48 +18,47 @@ st.set_page_config(
 st.markdown("""
 <style>
 /* ── Import Google Font ── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* ── Global ── */
+/* ── Global Styles ── */
 html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
 }
 
-/* ── Dark background ── */
+/* ── Minimal Dark Background ── */
 .stApp {
-    background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 40%, #16213e 100%);
+    background-color: #0d0f14 !important;
 }
 
-/* ── Sidebar ── */
+/* ── Sidebar Styling ── */
 section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #0d1117 0%, #161b22 100%);
-    border-right: 1px solid rgba(99, 102, 241, 0.15);
+    background-color: #08090c !important;
+    border-right: 1px solid #1c1e24 !important;
 }
 section[data-testid="stSidebar"] .stSelectbox label,
 section[data-testid="stSidebar"] .stRadio label,
 section[data-testid="stSidebar"] h2, section[data-testid="stSidebar"] h3 {
-    color: #e2e8f0 !important;
-}
-
-/* ── Header styling ── */
-h1 {
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 800 !important;
-    letter-spacing: -0.5px;
-    font-size: 2.2rem !important;
-    margin-bottom: 0 !important;
-}
-h2, h3 {
-    color: #e2e8f0 !important;
-    font-weight: 600 !important;
-}
-p, span, label, .stMarkdown {
     color: #cbd5e1 !important;
 }
 
-/* ── KPI Metric Cards ── */
+/* ── Typography ── */
+h1 {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 1.8rem !important;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem !important;
+}
+h2, h3, h4 {
+    color: #f1f5f9 !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.015em;
+}
+p, span, label {
+    color: #94a3b8 !important;
+}
+
+/* ── Minimal KPI Cards ── */
 .kpi-container {
     display: flex;
     gap: 16px;
@@ -67,186 +66,104 @@ p, span, label, .stMarkdown {
 }
 .kpi-card {
     flex: 1;
-    background: linear-gradient(135deg, rgba(99,102,241,0.12) 0%, rgba(168,85,247,0.08) 100%);
-    border: 1px solid rgba(99,102,241,0.2);
-    border-radius: 16px;
-    padding: 20px 24px;
+    background-color: #12141c;
+    border: 1px solid #1c1e24;
+    border-radius: 8px;
+    padding: 16px 20px;
     text-align: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(12px);
+    transition: all 0.2s ease;
 }
 .kpi-card:hover {
-    border-color: rgba(99,102,241,0.5);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(99,102,241,0.15);
+    border-color: #334155;
+    background-color: #151822;
 }
 .kpi-value {
-    font-size: 2rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #818cf8, #c084fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ffffff;
     line-height: 1.2;
 }
 .kpi-label {
-    font-size: 0.78rem;
-    color: #94a3b8 !important;
+    font-size: 0.7rem;
+    color: #64748b !important;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-top: 6px;
+    letter-spacing: 0.05em;
+    margin-top: 4px;
     font-weight: 600;
 }
 
-/* ── Section Cards ── */
-.section-card {
-    background: rgba(30, 30, 50, 0.6);
-    border: 1px solid rgba(99,102,241,0.12);
-    border-radius: 16px;
-    padding: 24px;
-    backdrop-filter: blur(12px);
-    margin-bottom: 16px;
-}
-
-/* ── Dataframe styling ── */
+/* ── Streamlit Element Customization ── */
 .stDataFrame {
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
 }
 [data-testid="stDataFrame"] {
-    border: 1px solid rgba(99,102,241,0.15);
-    border-radius: 12px;
+    border: 1px solid #1c1e24;
+    border-radius: 8px;
 }
-
-/* ── Streamlit element overrides ── */
 .stSelectbox > div > div {
-    background: rgba(30, 30, 50, 0.8) !important;
-    border: 1px solid rgba(99,102,241,0.25) !important;
-    border-radius: 10px !important;
-    color: #e2e8f0 !important;
+    background-color: #12141c !important;
+    border: 1px solid #1c1e24 !important;
+    border-radius: 6px !important;
+    color: #f1f5f9 !important;
 }
 
 /* ── Divider ── */
 .gradient-divider {
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #6366f1, #a855f7, #ec4899, transparent);
+    height: 1px;
+    background-color: #1c1e24;
     border: none;
-    margin: 8px 0 24px 0;
-    border-radius: 2px;
+    margin: 12px 0 24px 0;
 }
 
-/* ── Badge pills ── */
+/* ── Badges ── */
 .badge {
     display: inline-block;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.025em;
     text-transform: uppercase;
 }
 .badge-purple {
-    background: rgba(139, 92, 246, 0.2);
-    color: #c4b5fd;
-    border: 1px solid rgba(139, 92, 246, 0.3);
-}
-.badge-pink {
-    background: rgba(236, 72, 153, 0.2);
-    color: #f9a8d4;
-    border: 1px solid rgba(236, 72, 153, 0.3);
+    background-color: #1e293b;
+    color: #cbd5e1;
+    border: 1px solid #334155;
 }
 
-/* ── Sidebar brand ── */
+/* ── Sidebar Branding ── */
 .sidebar-brand {
-    text-align: center;
-    padding: 16px 0 24px 0;
-    border-bottom: 1px solid rgba(99,102,241,0.15);
+    padding: 8px 0 16px 0;
+    border-bottom: 1px solid #1c1e24;
     margin-bottom: 24px;
 }
 .sidebar-brand-title {
-    font-size: 1.4rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #818cf8, #c084fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.05em;
 }
 .sidebar-brand-sub {
-    font-size: 0.7rem;
-    color: #64748b !important;
+    font-size: 0.65rem;
+    color: #475569 !important;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-top: 4px;
+    letter-spacing: 0.1em;
+    margin-top: 2px;
 }
 
-/* ── Shift selector radio buttons ── */
-.shift-active {
-    background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(168,85,247,0.1));
-    border: 1px solid rgba(99,102,241,0.3);
-    border-radius: 10px;
-    padding: 10px 16px;
-    margin: 4px 0;
-}
-
-/* ── Bar chart styling ── */
-.bar-row {
-    display: flex;
-    align-items: center;
-    margin: 6px 0;
-    gap: 10px;
-}
-.bar-label {
-    width: 110px;
-    font-size: 0.78rem;
-    color: #94a3b8 !important;
-    text-align: right;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex-shrink: 0;
-}
-.bar-track {
-    flex: 1;
-    height: 24px;
-    background: rgba(30,30,50,0.5);
-    border-radius: 6px;
-    overflow: hidden;
-    position: relative;
-}
-.bar-fill {
-    height: 100%;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: #fff;
-    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ── Map container ── */
+/* ── Map Container ── */
 .map-container iframe {
-    border-radius: 12px !important;
-    border: 1px solid rgba(99,102,241,0.15) !important;
+    border-radius: 8px !important;
+    border: 1px solid #1c1e24 !important;
 }
 
-/* ── Hide default streamlit elements ── */
+/* ── Hide Default Streamlit Elements ── */
 #MainMenu {visibility: hidden;}
-header {visibility: hidden;}
-footer {visibility: hidden;}
-
-/* ── Table rank badge ── */
-.rank-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    font-size: 0.75rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, #6366f1, #a855f7);
-    color: #fff;
+header {
+    background-color: transparent !important;
 }
+footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -319,10 +236,10 @@ with st.sidebar:
     st.markdown("### 📋 Dataset Info")
     st.markdown(f"""
     <div style="font-size: 0.82rem; color: #94a3b8; line-height: 2;">
-        📌 <b style="color:#c4b5fd;">{len(df):,}</b> validated violations<br/>
-        📌 <b style="color:#c4b5fd;">{df['hotspot_cluster'].nunique()}</b> hotspot clusters<br/>
-        📌 <b style="color:#c4b5fd;">{df['police_station'].nunique()}</b> police stations<br/>
-        📌 <b style="color:#c4b5fd;">{df['junction_name'].nunique()}</b> junction names
+        📌 <b style="color:#ffffff;">{len(df):,}</b> validated violations<br/>
+        📌 <b style="color:#ffffff;">{df['hotspot_cluster'].nunique()}</b> hotspot clusters<br/>
+        📌 <b style="color:#ffffff;">{df['police_station'].nunique()}</b> police stations<br/>
+        📌 <b style="color:#ffffff;">{df['junction_name'].nunique()}</b> junction names
     </div>
     """, unsafe_allow_html=True)
 
@@ -428,50 +345,49 @@ with col_map:
     </div>
     """, unsafe_allow_html=True)
 
-    # Build the Folium map — plotting CLUSTER CENTROIDS, not individual rows
+    # Build the Folium map with CartoDB dark_matter tiles
     m = folium.Map(
         location=[12.9716, 77.5946],
         zoom_start=12,
-        tiles="OpenStreetMap"
+        tiles="CartoDB dark_matter"
     )
 
     # Color scale for markers based on violation severity
     max_violations = top_profiles['total_violations'].max() if len(top_profiles) > 0 else 1
 
     for _, row in top_profiles.iterrows():
-        # Scale radius by violation count (min 8, max 22)
+        # Scale radius by violation count (min 6, max 18)
         ratio = row['total_violations'] / max_violations
-        radius = 8 + ratio * 14
+        radius = 6 + ratio * 12
 
-        # Color gradient: low=blue → medium=purple → high=red
+        # Clean color gradient: low=blue → medium=orange → high=red
         if ratio > 0.7:
             color = "#ef4444"
-            fill_color = "#fca5a5"
+            fill_color = "#ef4444"
         elif ratio > 0.4:
-            color = "#a855f7"
-            fill_color = "#d8b4fe"
+            color = "#f97316"
+            fill_color = "#f97316"
         else:
-            color = "#6366f1"
-            fill_color = "#a5b4fc"
+            color = "#3b82f6"
+            fill_color = "#3b82f6"
 
-        # Rich popup HTML
+        # Clean popup HTML with light/dark contrast
         popup_html = f"""
-        <div style="font-family:Inter,sans-serif; min-width:220px; padding:4px;">
-            <div style="font-size:14px; font-weight:700; color:#1e1b4b; margin-bottom:8px;
-                        border-bottom:2px solid #6366f1; padding-bottom:6px;">
-                🔴 Zone #{int(row['rank'])} — Cluster {row.name}
+        <div style="font-family:'Inter',sans-serif; min-width:200px; padding:4px; color:#1e293b;">
+            <div style="font-size:12px; font-weight:600; border-bottom:1px solid #e2e8f0; padding-bottom:6px; margin-bottom:8px; color:#0f172a;">
+                Zone #{int(row['rank'])} &middot; Cluster {row.name}
             </div>
-            <table style="width:100%; font-size:12px; border-collapse:collapse;">
-                <tr><td style="padding:3px 0; color:#64748b;">📍 Junction</td>
-                    <td style="padding:3px 0; font-weight:600;">{row['primary_junction']}</td></tr>
-                <tr><td style="padding:3px 0; color:#64748b;">🏛️ Station</td>
-                    <td style="padding:3px 0; font-weight:600;">{row['police_station']}</td></tr>
-                <tr><td style="padding:3px 0; color:#64748b;">⚠️ Violations</td>
-                    <td style="padding:3px 0; font-weight:700; color:#dc2626;">{int(row['total_violations']):,}</td></tr>
-                <tr><td style="padding:3px 0; color:#64748b;">🚗 Vehicle</td>
-                    <td style="padding:3px 0; font-weight:600;">{row['top_vehicle']}</td></tr>
-                <tr><td style="padding:3px 0; color:#64748b;">📋 Offence</td>
-                    <td style="padding:3px 0; font-weight:600;">{row['top_violation'][:40]}</td></tr>
+            <table style="width:100%; font-size:11px; border-collapse:collapse;">
+                <tr><td style="padding:3px 0; color:#64748b; font-weight:500;">Junction</td>
+                    <td style="padding:3px 0; font-weight:600; text-align:right; color:#0f172a;">{row['primary_junction']}</td></tr>
+                <tr><td style="padding:3px 0; color:#64748b; font-weight:500;">Station</td>
+                    <td style="padding:3px 0; font-weight:600; text-align:right; color:#0f172a;">{row['police_station']}</td></tr>
+                <tr><td style="padding:3px 0; color:#64748b; font-weight:500;">Violations</td>
+                    <td style="padding:3px 0; font-weight:700; text-align:right; color:#ef4444;">{int(row['total_violations']):,}</td></tr>
+                <tr><td style="padding:3px 0; color:#64748b; font-weight:500;">Vehicle</td>
+                    <td style="padding:3px 0; font-weight:600; text-align:right; color:#0f172a;">{row['top_vehicle']}</td></tr>
+                <tr><td style="padding:3px 0; color:#64748b; font-weight:500;">Offence</td>
+                    <td style="padding:3px 0; font-weight:600; text-align:right; color:#0f172a; max-width:120px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="{row['top_violation']}">{row['top_violation']}</td></tr>
             </table>
         </div>
         """
@@ -482,8 +398,8 @@ with col_map:
             color=color,
             fill=True,
             fill_color=fill_color,
-            fill_opacity=0.5,
-            weight=2,
+            fill_opacity=0.4,
+            weight=1.5,
             popup=folium.Popup(popup_html, max_width=300),
             tooltip=f"#{int(row['rank'])} · {row['primary_junction']} ({int(row['total_violations']):,} violations)"
         ).add_to(m)
@@ -527,21 +443,19 @@ with col_data:
     vehicle_data.columns = ['Vehicle', 'Count']
 
     vehicle_chart = alt.Chart(vehicle_data).mark_bar(
-        cornerRadiusTopRight=6,
-        cornerRadiusBottomRight=6,
+        color='#3b82f6',
+        cornerRadiusTopRight=4,
+        cornerRadiusBottomRight=4,
     ).encode(
-        x=alt.X('Count:Q', axis=alt.Axis(grid=False, labelColor='#94a3b8', tickColor='#334155')),
-        y=alt.Y('Vehicle:N', sort='-x', axis=alt.Axis(labelColor='#e2e8f0', tickColor='#334155')),
-        color=alt.Color('Vehicle:N', scale=alt.Scale(
-            range=['#6366f1', '#7c3aed', '#a855f7', '#c084fc', '#d8b4fe', '#e9d5ff']
-        ), legend=None),
+        x=alt.X('Count:Q', axis=alt.Axis(grid=False, labelColor='#94a3b8', tickColor='#1c1e24')),
+        y=alt.Y('Vehicle:N', sort='-x', axis=alt.Axis(labelColor='#e2e8f0', tickColor='#1c1e24')),
         tooltip=['Vehicle', 'Count']
     ).properties(
         height=220,
     ).configure_view(
         strokeWidth=0,
     ).configure_axis(
-        domainColor='#334155',
+        domainColor='#1c1e24',
     )
 
     st.altair_chart(vehicle_chart, use_container_width=True)
@@ -559,21 +473,19 @@ with ins_col1:
     station_data.columns = ['Station', 'Count']
 
     station_chart = alt.Chart(station_data).mark_bar(
-        cornerRadiusTopRight=6,
-        cornerRadiusBottomRight=6,
+        color='#3b82f6',
+        cornerRadiusTopRight=4,
+        cornerRadiusBottomRight=4,
     ).encode(
-        x=alt.X('Count:Q', axis=alt.Axis(grid=False, labelColor='#94a3b8', tickColor='#334155')),
-        y=alt.Y('Station:N', sort='-x', axis=alt.Axis(labelColor='#e2e8f0', tickColor='#334155')),
-        color=alt.Color('Station:N', scale=alt.Scale(
-            range=['#ec4899', '#f43f5e', '#f97316', '#f59e0b', '#eab308', '#84cc16', '#22c55e', '#14b8a6']
-        ), legend=None),
+        x=alt.X('Count:Q', axis=alt.Axis(grid=False, labelColor='#94a3b8', tickColor='#1c1e24')),
+        y=alt.Y('Station:N', sort='-x', axis=alt.Axis(labelColor='#e2e8f0', tickColor='#1c1e24')),
         tooltip=['Station', 'Count']
     ).properties(
         height=280,
     ).configure_view(
         strokeWidth=0,
     ).configure_axis(
-        domainColor='#334155',
+        domainColor='#1c1e24',
     )
 
     st.altair_chart(station_chart, use_container_width=True)
@@ -602,19 +514,19 @@ with ins_col2:
         cornerRadiusTopLeft=3,
         cornerRadiusTopRight=3,
     ).encode(
-        x=alt.X('Hour:O', axis=alt.Axis(labelColor='#94a3b8', tickColor='#334155', labelAngle=0)),
-        y=alt.Y('Violations:Q', axis=alt.Axis(grid=False, labelColor='#94a3b8', tickColor='#334155')),
+        x=alt.X('Hour:O', axis=alt.Axis(labelColor='#94a3b8', tickColor='#1c1e24', labelAngle=0)),
+        y=alt.Y('Violations:Q', axis=alt.Axis(grid=False, labelColor='#94a3b8', tickColor='#1c1e24')),
         color=alt.Color('Shift:N', scale=alt.Scale(
             domain=['Morning', 'Afternoon', 'Evening', 'Night'],
-            range=['#f59e0b', '#f97316', '#8b5cf6', '#3b82f6']
-        ), legend=alt.Legend(orient='bottom', titleColor='#94a3b8', labelColor='#cbd5e1')),
+            range=['#93c5fd', '#60a5fa', '#3b82f6', '#1d4ed8']
+        ), legend=alt.Legend(orient='bottom', titleColor='#64748b', labelColor='#94a3b8')),
         tooltip=['Hour', 'Violations', 'Shift']
     ).properties(
         height=280,
     ).configure_view(
         strokeWidth=0,
     ).configure_axis(
-        domainColor='#334155',
+        domainColor='#1c1e24',
     )
 
     st.altair_chart(hourly_chart, use_container_width=True)
@@ -623,6 +535,6 @@ with ins_col2:
 # ── Footer ──────────────────────────────────────────────────────────────────
 st.markdown("""
 <div style="text-align:center; padding:32px 0 16px 0; color:#475569; font-size:0.72rem; letter-spacing:0.5px;">
-    GRIDLOCK · Bangalore Traffic Intelligence System · Built with Streamlit & Folium · Data: Jan–May Anonymised Police Records
+    Bangalore Traffic Intelligence System · Built with Streamlit
 </div>
 """, unsafe_allow_html=True)
