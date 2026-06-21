@@ -1,9 +1,8 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import folium
 from streamlit_folium import st_folium
-from sklearn.cluster import DBSCAN
+from folium.plugins import MarkerCluster
 
 st.set_page_config(layout="wide")
 st.title("🚨 Bangalore Traffic Hotspot Deployment Dashboard")
@@ -44,24 +43,26 @@ top_profiles = df_filtered.groupby('hotspot_cluster').agg(
 # 4. App UI Layout split
 col1, col2 = st.columns([2, 1])
 
+col1, col2 = st.columns([2, 1])
+
 with col1:
     st.subheader(f"📍 Active Hotspot Deployment Map ({view_mode})")
     m = folium.Map(location=[12.9716, 77.5946], zoom_start=12)
     
-    for cluster_id, row in top_profiles.iterrows():
-        popup_text = f"""
-        <b>Zone {cluster_id}: {row['primary_junction']}</b><br>
-        Total Violations: {row['total_violations']}<br>
-        Primary Target: {row['top_vehicle']}<br>
-        Offense: {row['top_violation']}
-        """
+    # Initialize the marker cluster on the map
+    marker_cluster = MarkerCluster().add_to(m)
+    
+    # Plot all matching filtered individual rows within the clustered view
+    for idx, row in df_filtered.iterrows():
+        popup_text = f"Junction: {row['junction_name']}<br>Cluster: {row['hotspot_cluster']}"
         folium.Marker(
-            location=[row['lat'], row['lon']], 
+            location=[row['latitude'], row['longitude']], 
             popup=folium.Popup(popup_text, max_width=300), 
             icon=folium.Icon(color="red", icon="info-sign")
-        ).add_to(m)
+        ).add_to(marker_cluster)
         
-    st_folium(m, width=800, height=550)
+    # Unique key prevents component re-render loops in streamlit-folium
+    st_folium(m, width=800, height=550, key=f"map_{view_mode}")
 
 with col2:
     st.subheader("📊 Deployment Resource Allocation")
